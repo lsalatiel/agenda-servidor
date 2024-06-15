@@ -1,0 +1,4 @@
+# FastAPI
+__pycache__
+venv/
+.env
