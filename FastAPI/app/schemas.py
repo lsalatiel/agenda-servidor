@@ -1,18 +1,13 @@
 import datetime
-from pydantic import BaseModel, EmailStr
-
-# model_config = ConfigDict(from_attributes=True)
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 class UserCreate(BaseModel):
+    id: str
     name: str
     password: str
     email: EmailStr
-
-class StudentCreate(UserCreate):
-    course: str
-
-class AssociateCreate(UserCreate):
-    pass
+    type: str = "student"
+    course: str = None # Optional
 
 class ScheduleCreate(BaseModel):
     area_id: int
@@ -21,18 +16,15 @@ class ScheduleCreate(BaseModel):
     start_time: datetime
     end_time: datetime
 
-class StudentResponse(BaseModel):
-    id: int
+class UserResponse(BaseModel):
+    id: str
     name: str
     email: EmailStr
-    course: str
+    type: str
+    course: str = None
     created_at: datetime
 
-class AssociateResponse(BaseModel):
-    id: int
-    name: str
-    email: EmailStr
-    created_at: datetime
+    model_config = ConfigDict(from_attributes=True)
 
 class AreaResponse(BaseModel):
     id: int
