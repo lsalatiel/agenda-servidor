@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = "students"
-    id = Column(String, primary_key=True, nullable=False) # id is the CPF (Cadastro de Pessoa Física)
+    id = Column(String, primary_key=True, nullable=False, unique=True) # id is the CPF (Cadastro de Pessoa Física)
     name = Column(String, nullable=False)
     password = Column(String, nullable=False)
     course = Column(String, nullable=True)
