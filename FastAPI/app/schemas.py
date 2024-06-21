@@ -12,8 +12,7 @@ class UserCreate(BaseModel):
 
 class ScheduleCreate(BaseModel):
     area_id: int
-    user_id: int
-    user_type: str  # 'student' or 'associate'
+    user_id: str
     start_time: datetime
     end_time: datetime
 
@@ -34,8 +33,7 @@ class AreaResponse(BaseModel):
 class ScheduleResponse(BaseModel):
     id: int
     area: AreaResponse
-    user: BaseModel # StudentResponse or AssociateResponse
-    user_type:str
+    user: UserResponse
     start_time: datetime
     end_time: datetime
     created_at: datetime
