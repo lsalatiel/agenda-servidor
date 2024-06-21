@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr
+from typing import Optional
 
 class UserCreate(BaseModel):
     id: str
@@ -7,7 +8,7 @@ class UserCreate(BaseModel):
     password: str
     email: EmailStr
     type: str = "student"
-    course: str = None # Optional
+    course: Optional[str] = "None" # Optional
 
 class ScheduleCreate(BaseModel):
     area_id: int
