@@ -23,10 +23,10 @@ class Schedule(Base):
     __tablename__ = "schedules"
     id = Column(Integer, primary_key=True, nullable=False)
     area_id = Column(Integer, ForeignKey("areas.id", ondelete="CASCADE"), nullable=False)
-    user_id = Column(String, nullable=False)
-    user_type = Column(String, nullable=False)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     start_time = Column(TIMESTAMP(timezone=True), nullable=False)
     end_time = Column(TIMESTAMP(timezone=True), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
     area = relationship("Area")
+    user = relationship("User")
