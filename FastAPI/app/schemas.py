@@ -10,6 +10,14 @@ class UserCreate(BaseModel):
     type: str = "student"
     course: Optional[str] = "None" # Optional
 
+class Area(BaseModel):
+    id: int
+    name: str
+
+class AreaCreate(Area):
+    is_open: Optional[int] = 1
+    pass
+
 class ScheduleCreate(BaseModel):
     area_id: int
     user_id: str
@@ -26,9 +34,9 @@ class UserResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-class AreaResponse(BaseModel):
-    id: int
-    name: str
+class AreaResponse(Area):
+    is_open: int
+    pass
 
 class ScheduleResponse(BaseModel):
     id: int

@@ -18,6 +18,7 @@ class Area(Base):
     __tablename__ = "areas"
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
+    is_open = Column(Integer, nullable=True, default=1)
 
 class Schedule(Base):
     __tablename__ = "schedules"
