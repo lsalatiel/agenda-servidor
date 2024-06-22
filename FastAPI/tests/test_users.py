@@ -17,3 +17,10 @@ def test_create_user(client):
 def test_create_user_incorrect(client, test_user, id, name, email, password, status_code):
     response = client.post("/users/", json={"id": id, "name": name, "email": email, "password": password})
     assert response.status_code == status_code
+
+def test_get_user(test_user, client):
+    response = client.get("/users/12345678911")
+    user = schemas.UserResponse(**response.json())
+    assert user.email == "pedroCampagnoli@gmail.com"
+    assert response.status_code == 200
+    assert user.name == "Pedro"
