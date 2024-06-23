@@ -44,3 +44,11 @@ def test_user(client):
     new_user = response.json()
     new_user['password'] = user_data['password']
     return new_user
+
+@pytest.fixture()
+def test_area(client):
+    area_data = {"id": "3", "name": "Test Area"}
+    response = client.post("/areas/", json=area_data)
+    assert response.status_code == 201
+
+    return area_data
