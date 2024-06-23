@@ -1,5 +1,3 @@
-# tests/test_areas.py
-
 import pytest
 from app import schemas
 
