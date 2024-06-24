@@ -3,16 +3,18 @@ import {
     Flex,
     Button,
     HStack,
-    Link,
+    // Link,
     chakra,
     VStack,
     useColorMode,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
+
+import { Link } from "react-router-dom";
 
 import { WiMoonWaxingCrescent4 } from "react-icons/wi";
 import { WiDaySunny } from "react-icons/wi";
-import React from "react"
-import SideDrawer from "./SideDrawer"
+import React from "react";
+import SideDrawer from "./SideDrawer";
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -33,14 +35,23 @@ export default function NavBar() {
 
                 <HStack>
                     <VStack mr={8}>
-                        <Link>Criar conta</Link>
-                        <Link>Login</Link>
+                        <Link to="/register">Criar Conta</Link>
+                        <Link to="/login">Login</Link>
                     </VStack>
-                    <Button onClick={toggleColorMode} mb={4} bg={"transparent"} fontSize="30px">
-                        {colorMode === "light" ? <WiMoonWaxingCrescent4 /> : <WiDaySunny />}
+                    <Button
+                        onClick={toggleColorMode}
+                        mb={4}
+                        bg={"transparent"}
+                        fontSize="30px"
+                    >
+                        {colorMode === "light" ? (
+                            <WiMoonWaxingCrescent4 />
+                        ) : (
+                            <WiDaySunny />
+                        )}
                     </Button>
                 </HStack>
             </Flex>
         </chakra.header>
-    )
+    );
 }

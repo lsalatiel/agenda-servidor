@@ -1,19 +1,19 @@
-import { Textarea, Text, Button, Box } from "@chakra-ui/react"
+import { Textarea, Text, Button, Box } from "@chakra-ui/react";
 
-import React from "react"
+import React from "react";
 
 export default function SuggestionBox() {
-    let [value, setValue] = React.useState("")
+    let [value, setValue] = React.useState("");
 
     let handleInputChange = (e) => {
-        let inputValue = e.target.value
-        setValue(inputValue)
-    }
+        let inputValue = e.target.value;
+        setValue(inputValue);
+    };
 
     const submitSuggestion = () => {
-        console.log(value)
-        setValue("")
-    }
+        console.log(value);
+        setValue("");
+    };
 
     return (
         <>
@@ -28,5 +28,5 @@ export default function SuggestionBox() {
             />
             <Button onClick={submitSuggestion}>Enviar</Button>
         </>
-    )
+    );
 }

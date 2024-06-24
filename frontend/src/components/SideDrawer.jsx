@@ -10,14 +10,14 @@ import {
     DrawerContent,
     DrawerCloseButton,
     Link,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
-import { FiMenu } from "react-icons/fi"
-import React from "react"
+import { FiMenu } from "react-icons/fi";
+import React from "react";
 
 export default function SideDrawer() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const btnRef = React.useRef();
 
     return (
         <>
@@ -48,5 +48,5 @@ export default function SideDrawer() {
                 </DrawerContent>
             </Drawer>
         </>
-    )
+    );
 }

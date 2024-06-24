@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 import {
     FormControl,
@@ -10,14 +10,14 @@ import {
     Center,
     Button,
     Stack,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
 function EmailInput() {
-    const [input, setInput] = useState("")
+    const [input, setInput] = useState("");
 
-    const handleInputChange = (e) => setInput(e.target.value)
+    const handleInputChange = (e) => setInput(e.target.value);
 
-    const isError = input === ""
+    const isError = input === "";
 
     return (
         <FormControl isInvalid={isError}>
@@ -34,15 +34,15 @@ function EmailInput() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
             )}
         </FormControl>
-    )
+    );
 }
 
 function PasswordInput() {
-    const [input, setInput] = useState("")
+    const [input, setInput] = useState("");
 
-    const handleInputChange = (e) => setInput(e.target.value)
+    const handleInputChange = (e) => setInput(e.target.value);
 
-    const isError = input === ""
+    const isError = input === "";
 
     return (
         <FormControl isInvalid={isError}>
@@ -54,7 +54,7 @@ function PasswordInput() {
                 <FormErrorMessage>Password is required.</FormErrorMessage>
             )}
         </FormControl>
-    )
+    );
 }
 
 function Login() {
@@ -69,7 +69,7 @@ function Login() {
                 <PasswordInput />
             </Stack>
         </Center>
-    )
+    );
 }
 
-export default Login
+export default Login;
