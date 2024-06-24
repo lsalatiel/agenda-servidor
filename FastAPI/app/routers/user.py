@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.database import get_db
 from sqlalchemy.orm import Session
-from app import schemas, models
+from app import schemas, models, utils
 
 router = APIRouter(prefix="/users", tags=['Users'])
 
@@ -14,6 +14,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if user_id:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"User with ID {user.id} already exists")
     
+    user.password = utils.hash(user.password)
     new_user = models.User(**user.model_dump())
     db.add(new_user)
     db.commit()
