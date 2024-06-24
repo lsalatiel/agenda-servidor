@@ -45,3 +45,10 @@ class ScheduleResponse(BaseModel):
     start_time: datetime
     end_time: datetime
     created_at: datetime
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[str] = None
