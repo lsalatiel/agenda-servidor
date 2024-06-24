@@ -8,6 +8,7 @@ from app.config import settings
 from app.database import get_db
 
 import pytest
+from datetime import datetime, timedelta
 
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
 
@@ -44,3 +45,21 @@ def test_user(client):
     new_user = response.json()
     new_user['password'] = user_data['password']
     return new_user
+
+@pytest.fixture()
+def test_area(client):
+    area_data = {"id": "3", "name": "Test Area"}
+    response = client.post("/areas/", json=area_data)
+    assert response.status_code == 201
+
+    return area_data
+
+@pytest.fixture()
+def test_schedule(client, test_area, test_user):
+    start_time = datetime.now()
+    end_time = start_time + timedelta(hours=1)
+    schedule_data = {"area_id": "3", "user_id": "12345678911", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()}
+    response = client.post("/schedules/", json=schedule_data)
+    assert response.status_code == 201
+
+    return response.json()
