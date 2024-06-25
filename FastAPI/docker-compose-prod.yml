@@ -1,27 +1,28 @@
 version: "3"
 services:
   api:
-    build: naascimento0/agenda-servidor
+    image: naascimento0/agenda-servidor
     depends_on:
       - postgres
     ports:
-      - 80:8000
+      - "80:8000"
     command: /usr/src/app/entrypoint.sh
     environment:
-      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USERNAME=${DATABASE_USERNAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - ALGORITHM=${ALGORITHM}
-      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+      DATABASE_HOSTNAME: ${DATABASE_HOSTNAME}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      SECRET_KEY: ${SECRET_KEY}
+      ALGORITHM: ${ALGORITHM}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
   postgres:
     image: postgres
     environment:
-      - POSTGRES_DB=${DATABASE_PASSWORD}
-      - POSTGRES_PASSWORD=${DATABASE_NAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
     volumes:
-      - postgres-db:/var/lib/postgresql/data 
+      - postgres-db:/var/lib/postgresql/data
 volumes:
   postgres-db:
