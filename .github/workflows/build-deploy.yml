@@ -39,10 +39,11 @@ jobs:
       - name: update pip
         run: python -m pip install --upgrade pip
       - name: install all dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r FastAPI/requirements.txt
       - name: test with pytest
         run: |
           pip install pytest
+          cd FastAPI
           pytest
 
       - name: Login to Docker Hub
@@ -58,6 +59,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./FastAPI/Dockerfile
           push: true
           tags: ${{secrets.DOCKERHUB_USERNAME}}/agenda-servidor:latest
