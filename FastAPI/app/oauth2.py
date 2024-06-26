@@ -12,7 +12,7 @@ SECRET_KEY = settings.secret_key
 ALGORITHM = settings.algorithm
 ACESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
-def create_acess_token(data: dict):
+def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
