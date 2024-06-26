@@ -1,6 +1,7 @@
 import pytest
 from app import schemas
 from app.config import settings
+from jose import jwt
 
 def test_create_user(client):
     response = client.post("/users/", json={"id": "12345678911", "name": "Pedro", "email": "pedroCampagnoli@gmail.com", "password": "123"})
@@ -24,3 +25,20 @@ def test_get_user(test_user, client):
     assert user.email == "pedroCampagnoli@gmail.com"
     assert response.status_code == 200
     assert user.name == "Pedro"
+
+def test_login_user(client, test_user):
+    response = client.post("/login/", data={"username": test_user['id'], "password": test_user['password']})
+    login_response = schemas.Token(**response.json())
+    payload = jwt.decode(login_response.access_token, settings.secret_key, algorithms=[settings.algorithm])
+    id = payload.get("user_id")
+    assert id == test_user['id']
+    assert login_response.token_type == "bearer"
+    assert response.status_code == 200
+
+@pytest.mark.parametrize("username, password, status_code", [
+    ('12345678911', 'wrongpassword', 403),  # invalid
+    ('wrongusername', '123', 403), # invalid
+])
+def test_login_user_incorrect(client, test_user, username, password, status_code):
+    response = client.post("/login/", data={"username": test_user['id'], "password": "wrongpassword"})
+    assert response.status_code == 403
