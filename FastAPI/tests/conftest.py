@@ -10,6 +10,8 @@ from app.database import get_db
 import pytest
 from datetime import datetime, timedelta
 
+from app.oauth2 import create_access_token
+
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -63,3 +65,15 @@ def test_schedule(client, test_area, test_user):
     assert response.status_code == 201
 
     return response.json()
+
+@pytest.fixture()
+def token(test_user):
+    return create_access_token({"user_id": test_user['id']})
+
+@pytest.fixture()
+def authorized_client(client, token):
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {token}"
+    }
+    return client
