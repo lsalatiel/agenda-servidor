@@ -21,8 +21,14 @@ def test_create_schedule_invalid_area(authorized_client, test_user):
 def test_create_schedule_invalid_user(authorized_client, test_area):
     start_time = datetime.now()
     end_time = start_time + timedelta(hours=1)
-    response = authorized_client.post("/schedules/", json={"area_id": test_area['id'], "user_id": "invalid", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()})
+    response = authorized_client.post("/schedules/", json={"area_id": test_area['id'], "user_id": "722.327.970-23", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()})
     assert response.status_code == 404
+
+def test_create_schedule_invalid_user_id(authorized_client, test_area):
+    start_time = datetime.now()
+    end_time = start_time + timedelta(hours=1)
+    response = authorized_client.post("/schedules/", json={"area_id": test_area['id'], "user_id": "72232797023", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()})
+    assert response.status_code == 422
 
 def test_create_schedule_invalid_data(authorized_client):
     response = authorized_client.post("/schedules/", json={"area_id": 999, "user_id": "invalid", "start_time": "invalid", "end_time": "invalid"})
