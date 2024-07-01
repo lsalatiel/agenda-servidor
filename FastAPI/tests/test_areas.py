@@ -1,4 +1,3 @@
-import pytest
 from app import schemas
 
 def test_create_area(client):

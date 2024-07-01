@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.database import get_db
 from sqlalchemy.orm import Session
@@ -18,6 +19,11 @@ async def create_schedule(schedule: schemas.ScheduleCreate, db: Session = Depend
     db.commit()
     db.refresh(new_schedule)
     return new_schedule
+
+@router.get("/", response_model=List[schemas.ScheduleResponse])
+async def get_schedules(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int = 10, offset: int = 0):
+    schedules = db.query(models.Schedule).offset(offset).limit(limit).all()
+    return schedules
 
 @router.get("/{id}", response_model=schemas.ScheduleResponse)
 async def get_schedule(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
