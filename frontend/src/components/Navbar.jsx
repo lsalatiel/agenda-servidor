@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 import { WiMoonWaxingCrescent4 } from "react-icons/wi";
 import { WiDaySunny } from "react-icons/wi";
+import { IoMdHome } from "react-icons/io";
 import React from "react";
 import SideDrawer from "./SideDrawer";
 
@@ -30,7 +31,7 @@ export default function NavBar() {
                 </HStack>
 
                 <HStack as="nav" spacing="5">
-                    <Link>Home</Link>
+                    <Link to="/"><IoMdHome size="2em"/></Link>
                 </HStack>
 
                 <HStack>

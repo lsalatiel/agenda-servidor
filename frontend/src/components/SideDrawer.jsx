@@ -9,8 +9,9 @@ import {
     DrawerOverlay,
     DrawerContent,
     DrawerCloseButton,
-    Link,
 } from "@chakra-ui/react";
+
+import { Link } from "react-router-dom";
 
 import { FiMenu } from "react-icons/fi";
 import React from "react";
@@ -37,10 +38,10 @@ export default function SideDrawer() {
 
                     <DrawerBody>
                         <VStack p={10} spacing="34px">
-                            <Link fontSize="large">Home</Link>
-                            <Link fontSize="large">Agendar</Link>
-                            <Link fontSize="large">Meus Agendamentos</Link>
-                            <Link fontSize="large">Consulta</Link>
+                            <Link to="/" fontSize="large">Home</Link>
+                            <Link to="/agendar" fontSize="large">Agendar</Link>
+                            <Link to="/meus-agendamentos" fontSize="large">Meus Agendamentos</Link>
+                            <Link to="consulta" fontSize="large">Consulta</Link>
                         </VStack>
                     </DrawerBody>
 
