@@ -3,14 +3,14 @@ import { useState } from "react";
 import {
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
     Input,
-    useColorMode,
     Center,
-    Button,
     Stack,
+    Button,
+    Heading,
 } from "@chakra-ui/react";
+
+import Navbar from "../components/Navbar";
 
 function EmailInput() {
     const [input, setInput] = useState("");
@@ -20,7 +20,7 @@ function EmailInput() {
     const isError = input === "";
 
     return (
-        <FormControl isInvalid={isError}>
+        <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
                 placeholder="email@edu.ufes.br"
@@ -28,11 +28,6 @@ function EmailInput() {
                 value={input}
                 onChange={handleInputChange}
             />
-            {!isError ? (
-                <FormHelperText> We'll never share your email. </FormHelperText>
-            ) : (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-            )}
         </FormControl>
     );
 }
@@ -45,31 +40,25 @@ function PasswordInput() {
     const isError = input === "";
 
     return (
-        <FormControl isInvalid={isError}>
+        <FormControl>
             <FormLabel>Password</FormLabel>
             <Input type="password" value={input} onChange={handleInputChange} />
-            {!isError ? (
-                <FormHelperText></FormHelperText>
-            ) : (
-                <FormErrorMessage>Password is required.</FormErrorMessage>
-            )}
         </FormControl>
     );
 }
 
-function Login() {
-    // const { colorMode, toggleColorMode } = useColorMode();
-
-    // let text = colorMode === "light" ? "dark" : "light";
-    // <Button onClick={toggleColorMode}></Button>
+export default function Login() {
     return (
-        <Center h="100vh" maxW="1200px" mx="auto">
-            <Stack spacing={4}>
-                <EmailInput />
-                <PasswordInput />
-            </Stack>
-        </Center>
+        <>
+            <Navbar />
+            <Center h="50vh" maxW="1200px" mx="auto">
+                <Stack spacing={4}>
+                    <Heading mb={8} fontSize={"3em"}>Login</Heading>
+                    <EmailInput />
+                    <PasswordInput />
+                    <Button colorScheme="teal">Login</Button>
+                </Stack>
+            </Center>
+        </>
     );
 }
-
-export default Login;
