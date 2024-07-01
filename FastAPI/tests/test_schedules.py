@@ -1,7 +1,5 @@
-import pytest
 from app import schemas
 from datetime import datetime, timedelta
-from fastapi import HTTPException
 
 def test_create_schedule(authorized_client, test_area, test_user):
     start_time = datetime.now()
@@ -44,6 +42,10 @@ def test_get_schedule_not_found(authorized_client):
     response = authorized_client.get("/schedules/999")
     assert response.status_code == 404
 
+def test_get_schedules(authorized_client, test_schedule):
+    response = authorized_client.get("/schedules/")
+    assert response.status_code == 200
+
 def test_delete_schedule(authorized_client, test_schedule):
     response = authorized_client.delete(f"/schedules/{test_schedule['id']}")
     assert response.status_code == 204
@@ -56,6 +58,10 @@ def test_unauthorized_user_create_schedule(client, test_area, test_user):
     start_time = datetime.now()
     end_time = start_time + timedelta(hours=1)
     response = client.post("/schedules/", json={"area_id": test_area['id'], "user_id": test_user['id'], "start_time": start_time.isoformat(), "end_time": end_time.isoformat()})
+    assert response.status_code == 401
+
+def test_unauthorized_user_get_schedules(client):
+    response = client.get("/schedules/")
     assert response.status_code == 401
 
 def test_unauthorized_user_get_schedule(client):
