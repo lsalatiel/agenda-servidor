@@ -1,14 +1,17 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import Optional
+from app.utils import CPF
 
 class UserCreate(BaseModel):
-    id: str
+    id: CPF
     name: str
     password: str
     email: EmailStr
     type: str = "student"
     course: Optional[str] = "None" # Optional
+
+    model_config = ConfigDict(from_attributes=True)
 
 class Area(BaseModel):
     id: int
@@ -20,12 +23,12 @@ class AreaCreate(Area):
 
 class ScheduleCreate(BaseModel):
     area_id: int
-    user_id: str
+    user_id: CPF
     start_time: datetime
     end_time: datetime
 
 class UserResponse(BaseModel):
-    id: str
+    id: CPF
     name: str
     email: EmailStr
     type: str
@@ -45,6 +48,8 @@ class ScheduleResponse(BaseModel):
     start_time: datetime
     end_time: datetime
     created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
 
 class Token(BaseModel):
     access_token: str

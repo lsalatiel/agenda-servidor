@@ -10,6 +10,8 @@ from app.database import get_db
 import pytest
 from datetime import datetime, timedelta
 
+from app.oauth2 import create_access_token
+
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -38,7 +40,7 @@ def client(session):
 
 @pytest.fixture()
 def test_user(client):
-    user_data = {"id": "12345678911", "name": "Pedro", "email": "pedroCampagnoli@gmail.com", "password": "123"}
+    user_data = {"id": "912.890.377-36", "name": "Pedro", "email": "pedroCampagnoli@gmail.com", "password": "123"}
     response = client.post("/users/", json=user_data)
     assert response.status_code == 201
 
@@ -58,8 +60,20 @@ def test_area(client):
 def test_schedule(client, test_area, test_user):
     start_time = datetime.now()
     end_time = start_time + timedelta(hours=1)
-    schedule_data = {"area_id": "3", "user_id": "12345678911", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()}
+    schedule_data = {"area_id": "3", "user_id": "912.890.377-36", "start_time": start_time.isoformat(), "end_time": end_time.isoformat()}
     response = client.post("/schedules/", json=schedule_data)
     assert response.status_code == 201
 
     return response.json()
+
+@pytest.fixture()
+def token(test_user):
+    return create_access_token({"user_id": test_user['id']})
+
+@pytest.fixture()
+def authorized_client(client, token):
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {token}"
+    }
+    return client
