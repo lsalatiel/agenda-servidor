@@ -11,6 +11,25 @@ export function convertToISO8601(dateStr, timeStr) {
     return isoDate;
 }
 
+export function formatDateTime(isoString) {
+    const date = new Date(isoString);
+
+    // Format the date as dd/mm/yyyy
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+    // Format the time without seconds
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const formattedTime = `${hours}:${minutes}`;
+
+    return { formattedDate, formattedTime };
+}
+
 export function incrementHour(time) {
     // Parse the time string into hours and minutes
     const [hoursStr, minutesStr] = time.split(':');
