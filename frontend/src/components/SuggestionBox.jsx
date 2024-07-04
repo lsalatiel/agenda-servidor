@@ -1,6 +1,7 @@
 import { Textarea, Text, Button, Box } from "@chakra-ui/react";
 
 import React from "react";
+import { useState } from "react";
 
 export default function SuggestionBox() {
     let [value, setValue] = React.useState("");
@@ -10,9 +11,12 @@ export default function SuggestionBox() {
         setValue(inputValue);
     };
 
+    const [message, setMessage] = useState("");
+
     const submitSuggestion = () => {
         console.log(value);
         setValue("");
+        setMessage("Sugestão enviada com sucesso!");
     };
 
     return (
@@ -27,6 +31,7 @@ export default function SuggestionBox() {
                 minWidth="400px"
             />
             <Button onClick={submitSuggestion}>Enviar</Button>
+            {message && <Text mt={4} color="cyan">{message}</Text>}
         </>
     );
 }
