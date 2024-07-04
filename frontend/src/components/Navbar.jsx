@@ -1,5 +1,5 @@
 import {
-    // Image,
+    Image,
     Flex,
     Button,
     HStack,
@@ -8,6 +8,7 @@ import {
     VStack,
     Text,
     useColorMode,
+    Box,
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -22,6 +23,8 @@ import SideDrawer from "./SideDrawer";
 import { getAccessToken } from "../utils/auth";
 import { clearAccessToken } from "../utils/auth";
 import { getUsername } from "../utils/auth";
+
+import logoImage from "../assets/logo.png";
 
 function LoginStack() {
     const [name, setName] = useState(null);
@@ -87,7 +90,9 @@ export default function NavBar() {
             <Flex w="100%" px="6" py="0" align="center" justify="space-between">
                 <HStack>
                     <SideDrawer />
-                    <Button>LOGO</Button>
+                    <Box maxW="200px" maxH="200px">
+                        <Image src={logoImage} ></Image>
+                    </Box>
                 </HStack>
 
                 <HStack as="nav" spacing="5">
