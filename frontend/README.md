@@ -6,3 +6,23 @@ Currently, two official plugins are available:
 
 -   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 -   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Running the frontend separately
+
+Assuming you've already installed the project.
+
+1. Change directory to frontend/
+```
+cd frontend/
+```
+2. Install dependencies
+```
+npm install
+npm install react-router-dom
+npm install react-icons --save
+```
+
+3. Run the application
+```
+npm run dev
+```
