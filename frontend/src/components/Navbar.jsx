@@ -6,9 +6,11 @@ import {
     // Link,
     chakra,
     VStack,
+    Text,
     useColorMode,
 } from "@chakra-ui/react";
 
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { WiMoonWaxingCrescent4 } from "react-icons/wi";
@@ -16,6 +18,63 @@ import { WiDaySunny } from "react-icons/wi";
 import { IoMdHome } from "react-icons/io";
 import React from "react";
 import SideDrawer from "./SideDrawer";
+
+import { getAccessToken } from "../utils/auth";
+import { clearAccessToken } from "../utils/auth";
+import { getUsername } from "../utils/auth";
+
+function LoginStack() {
+    const [name, setName] = useState(null);
+    const [authenticated, setAuthenticated] = useState(!!getAccessToken()); // Check if user is authenticated
+
+    useEffect(() => {
+        const fetchName = async () => {
+            try {
+                const username = getUsername();
+                const url = `http://localhost:8000/users/${username}`;
+                const response = await fetch(url, {
+                    // headers: {
+                    //     Authorization: `Bearer ${getAccessToken()}`
+                    // }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setName(data.name);
+                } else {
+                    console.error("Failed to fetch real name:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching real name:", error);
+            }
+        };
+
+        if (authenticated) {
+            fetchName();
+        }
+    }, [authenticated]);
+
+    const handleLogout = () => {
+        clearAccessToken(); // Clear access token from localStorage
+        setAuthenticated(false); // Update authentication state
+    };
+
+    if (authenticated) {
+        return (
+            <VStack mr={8}>
+                <Text>Bem-vindo {name}</Text>
+                <Button onClick={handleLogout}>
+                    Logout
+                </Button>
+            </VStack>
+        );
+    }
+    return (
+        <VStack mr={8}>
+            <Link to="/register">Criar Conta</Link>
+            <Link to="/login">Login</Link>
+        </VStack>
+    );
+}
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -35,10 +94,7 @@ export default function NavBar() {
                 </HStack>
 
                 <HStack>
-                    <VStack mr={8}>
-                        <Link to="/register">Criar Conta</Link>
-                        <Link to="/login">Login</Link>
-                    </VStack>
+                    <LoginStack/>
                     <Button
                         onClick={toggleColorMode}
                         mb={4}

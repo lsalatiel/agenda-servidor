@@ -86,6 +86,10 @@ export default function Login() {
                 body: data,
             });
             if (response.ok) {
+                const responseData = await response.json();
+                const token = responseData.access_token; // Adjust according to your API response structure
+                localStorage.setItem("accessToken", token); // Store token in localStorage
+                localStorage.setItem("username", formData.username);
                 // Redirect to the dashboard or another page on successful login
                 navigate("/");
             } else {
