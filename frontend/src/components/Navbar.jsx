@@ -41,7 +41,10 @@ function LoginStack() {
                     const data = await response.json();
                     setName(data.name);
                 } else {
-                    console.error("Failed to fetch real name:", response.statusText);
+                    console.error(
+                        "Failed to fetch real name:",
+                        response.statusText
+                    );
                 }
             } catch (error) {
                 console.error("Error fetching real name:", error);
@@ -62,9 +65,7 @@ function LoginStack() {
         return (
             <VStack mr={8}>
                 <Text>Bem-vindo {name}</Text>
-                <Button onClick={handleLogout}>
-                    Logout
-                </Button>
+                <Button onClick={handleLogout}>Logout</Button>
             </VStack>
         );
     }
@@ -90,11 +91,13 @@ export default function NavBar() {
                 </HStack>
 
                 <HStack as="nav" spacing="5">
-                    <Link to="/"><IoMdHome size="2em"/></Link>
+                    <Link to="/">
+                        <IoMdHome size="2em" />
+                    </Link>
                 </HStack>
 
                 <HStack>
-                    <LoginStack/>
+                    <LoginStack />
                     <Button
                         onClick={toggleColorMode}
                         mb={4}

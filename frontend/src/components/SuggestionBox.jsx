@@ -31,7 +31,11 @@ export default function SuggestionBox() {
                 minWidth="400px"
             />
             <Button onClick={submitSuggestion}>Enviar</Button>
-            {message && <Text mt={4} color="cyan">{message}</Text>}
+            {message && (
+                <Text mt={4} color="cyan">
+                    {message}
+                </Text>
+            )}
         </>
     );
 }

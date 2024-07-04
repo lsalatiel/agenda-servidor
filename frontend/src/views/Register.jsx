@@ -14,11 +14,11 @@ import {
 } from "@chakra-ui/react";
 
 import Navbar from "../components/Navbar";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function CpfInput({ value, onChange, setIsInvalid }) {
     const handleInputChange = (e) => {
-        let rawValue = e.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+        let rawValue = e.target.value.replace(/\D/g, ""); // Remove all non-digit characters
         let formattedValue = rawValue;
 
         if (rawValue.length > 11) {
@@ -26,13 +26,19 @@ function CpfInput({ value, onChange, setIsInvalid }) {
         }
 
         if (rawValue.length > 3) {
-            formattedValue = rawValue.replace(/^(\d{3})(\d)/, '$1.$2');
+            formattedValue = rawValue.replace(/^(\d{3})(\d)/, "$1.$2");
         }
         if (rawValue.length > 6) {
-            formattedValue = formattedValue.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+            formattedValue = formattedValue.replace(
+                /^(\d{3})\.(\d{3})(\d)/,
+                "$1.$2.$3"
+            );
         }
         if (rawValue.length > 9) {
-            formattedValue = formattedValue.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            formattedValue = formattedValue.replace(
+                /^(\d{3})\.(\d{3})\.(\d{3})(\d)/,
+                "$1.$2.$3-$4"
+            );
         }
 
         setIsInvalid(rawValue.length !== 11); // Check if the raw value length is exactly 11 digits
@@ -40,14 +46,16 @@ function CpfInput({ value, onChange, setIsInvalid }) {
     };
 
     return (
-        <FormControl isInvalid={value.replace(/\D/g, '').length !== 11}>
+        <FormControl isInvalid={value.replace(/\D/g, "").length !== 11}>
             <FormLabel>CPF</FormLabel>
             <Input
                 placeholder="000.000.000-00"
                 value={value}
                 onChange={handleInputChange}
             />
-            {value.replace(/\D/g, '').length !== 11 && <FormErrorMessage>CPF must contain 11 digits</FormErrorMessage>}
+            {value.replace(/\D/g, "").length !== 11 && (
+                <FormErrorMessage>CPF must contain 11 digits</FormErrorMessage>
+            )}
         </FormControl>
     );
 }
@@ -68,14 +76,14 @@ function NameInput({ value, onChange }) {
 function EmailInput({ value, onChange, setIsInvalid }) {
     const handleInputChange = (e) => {
         const email = e.target.value;
-        const hasAtSymbol = email.includes('@');
+        const hasAtSymbol = email.includes("@");
 
         setIsInvalid(!hasAtSymbol);
         onChange(email);
     };
 
     return (
-        <FormControl isInvalid={!value.includes('@')}>
+        <FormControl isInvalid={!value.includes("@")}>
             <FormLabel>Email</FormLabel>
             <Input
                 placeholder="email@edu.ufes.br"
@@ -83,7 +91,9 @@ function EmailInput({ value, onChange, setIsInvalid }) {
                 value={value}
                 onChange={handleInputChange}
             />
-            {!value.includes('@') && <FormErrorMessage>Invalid email</FormErrorMessage>}
+            {!value.includes("@") && (
+                <FormErrorMessage>Invalid email</FormErrorMessage>
+            )}
         </FormControl>
     );
 }
@@ -92,7 +102,11 @@ function PasswordInput({ value, onChange }) {
     return (
         <FormControl>
             <FormLabel>Senha</FormLabel>
-            <Input type="password" value={value} onChange={(e) => onChange(e.target.value)} />
+            <Input
+                type="password"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
         </FormControl>
     );
 }
@@ -173,7 +187,11 @@ function CourseInput({ value, onChange }) {
     return (
         <FormControl>
             <FormLabel>Curso</FormLabel>
-            <Select placeholder="Selecione seu curso" value={value} onChange={(e) => onChange(e.target.value)}>
+            <Select
+                placeholder="Selecione seu curso"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            >
                 {courses.map((course, index) => (
                     <option key={index} value={course}>
                         {course}
@@ -231,13 +249,39 @@ export default function Register() {
             <Navbar />
             <Center h="100vh" maxW="1200px" mx="auto">
                 <Stack spacing={4}>
-                    <CpfInput value={formData.id} onChange={handleChange("id")} setIsInvalid={setCpfIsInvalid} />
-                    <NameInput value={formData.name} onChange={handleChange("name")} />
-                    <EmailInput value={formData.email} onChange={handleChange("email")} setIsInvalid={setEmailIsInvalid} />
-                    <PasswordInput value={formData.password} onChange={handleChange("password")} />
-                    <TypeInput value={formData.type} onChange={handleChange("type")} />
-                    <CourseInput value={formData.course} onChange={handleChange("course")} />
-                    <Button colorScheme="teal" onClick={handleSubmit} isDisabled={!isFormValid}>Register</Button>
+                    <CpfInput
+                        value={formData.id}
+                        onChange={handleChange("id")}
+                        setIsInvalid={setCpfIsInvalid}
+                    />
+                    <NameInput
+                        value={formData.name}
+                        onChange={handleChange("name")}
+                    />
+                    <EmailInput
+                        value={formData.email}
+                        onChange={handleChange("email")}
+                        setIsInvalid={setEmailIsInvalid}
+                    />
+                    <PasswordInput
+                        value={formData.password}
+                        onChange={handleChange("password")}
+                    />
+                    <TypeInput
+                        value={formData.type}
+                        onChange={handleChange("type")}
+                    />
+                    <CourseInput
+                        value={formData.course}
+                        onChange={handleChange("course")}
+                    />
+                    <Button
+                        colorScheme="teal"
+                        onClick={handleSubmit}
+                        isDisabled={!isFormValid}
+                    >
+                        Register
+                    </Button>
                 </Stack>
             </Center>
         </>

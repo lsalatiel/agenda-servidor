@@ -14,11 +14,11 @@ import {
 } from "@chakra-ui/react";
 
 import Navbar from "../components/Navbar";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function CpfInput({ value, onChange, setIsInvalid }) {
     const handleInputChange = (e) => {
-        let rawValue = e.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+        let rawValue = e.target.value.replace(/\D/g, ""); // Remove all non-digit characters
         let formattedValue = rawValue;
 
         if (rawValue.length > 11) {
@@ -26,13 +26,19 @@ function CpfInput({ value, onChange, setIsInvalid }) {
         }
 
         if (rawValue.length > 3) {
-            formattedValue = rawValue.replace(/^(\d{3})(\d)/, '$1.$2');
+            formattedValue = rawValue.replace(/^(\d{3})(\d)/, "$1.$2");
         }
         if (rawValue.length > 6) {
-            formattedValue = formattedValue.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+            formattedValue = formattedValue.replace(
+                /^(\d{3})\.(\d{3})(\d)/,
+                "$1.$2.$3"
+            );
         }
         if (rawValue.length > 9) {
-            formattedValue = formattedValue.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            formattedValue = formattedValue.replace(
+                /^(\d{3})\.(\d{3})\.(\d{3})(\d)/,
+                "$1.$2.$3-$4"
+            );
         }
 
         setIsInvalid(rawValue.length !== 11); // Check if the raw value length is exactly 11 digits
@@ -40,14 +46,16 @@ function CpfInput({ value, onChange, setIsInvalid }) {
     };
 
     return (
-        <FormControl isInvalid={value.replace(/\D/g, '').length !== 11}>
+        <FormControl isInvalid={value.replace(/\D/g, "").length !== 11}>
             <FormLabel>CPF</FormLabel>
             <Input
                 placeholder="000.000.000-00"
                 value={value}
                 onChange={handleInputChange}
             />
-            {value.replace(/\D/g, '').length !== 11 && <FormErrorMessage>CPF must contain 11 digits</FormErrorMessage>}
+            {value.replace(/\D/g, "").length !== 11 && (
+                <FormErrorMessage>CPF must contain 11 digits</FormErrorMessage>
+            )}
         </FormControl>
     );
 }
@@ -56,7 +64,11 @@ function PasswordInput({ value, onChange }) {
     return (
         <FormControl>
             <FormLabel>Senha</FormLabel>
-            <Input type="password" value={value} onChange={(e) => onChange(e.target.value)} />
+            <Input
+                type="password"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
         </FormControl>
     );
 }
@@ -94,7 +106,9 @@ export default function Login() {
                 navigate("/");
             } else {
                 // Handle login error
-                setLoginError("Failed to login. Please check your CPF and password.");
+                setLoginError(
+                    "Failed to login. Please check your CPF and password."
+                );
                 console.error("Error during login:", response.statusText);
             }
         } catch (error) {
@@ -111,16 +125,31 @@ export default function Login() {
             <Navbar />
             <Center h="50vh" maxW="1200px" mx="auto">
                 <Stack spacing={4}>
-                    <Heading mb={8} fontSize={"3em"}>Login</Heading>
+                    <Heading mb={8} fontSize={"3em"}>
+                        Login
+                    </Heading>
                     {loginError && (
                         <Alert status="error">
                             <AlertIcon />
                             {loginError}
                         </Alert>
                     )}
-                    <CpfInput value={formData.username} onChange={handleChange("username")} setIsInvalid={setCpfIsInvalid} />
-                    <PasswordInput value={formData.password} onChange={handleChange("password")} />
-                    <Button colorScheme="teal" onClick={handleLogin} isDisabled={!isFormValid}>Login</Button>
+                    <CpfInput
+                        value={formData.username}
+                        onChange={handleChange("username")}
+                        setIsInvalid={setCpfIsInvalid}
+                    />
+                    <PasswordInput
+                        value={formData.password}
+                        onChange={handleChange("password")}
+                    />
+                    <Button
+                        colorScheme="teal"
+                        onClick={handleLogin}
+                        isDisabled={!isFormValid}
+                    >
+                        Login
+                    </Button>
                 </Stack>
             </Center>
         </>

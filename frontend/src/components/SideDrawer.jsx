@@ -38,10 +38,18 @@ export default function SideDrawer() {
 
                     <DrawerBody>
                         <VStack p={10} spacing="34px">
-                            <Link to="/" fontSize="large">Home</Link>
-                            <Link to="/agendar" fontSize="large">Agendar</Link>
-                            <Link to="/meus-agendamentos" fontSize="large">Meus Agendamentos</Link>
-                            <Link to="consulta" fontSize="large">Consulta</Link>
+                            <Link to="/" fontSize="large">
+                                Home
+                            </Link>
+                            <Link to="/agendar" fontSize="large">
+                                Agendar
+                            </Link>
+                            <Link to="/meus-agendamentos" fontSize="large">
+                                Meus Agendamentos
+                            </Link>
+                            <Link to="consulta" fontSize="large">
+                                Consulta
+                            </Link>
                         </VStack>
                     </DrawerBody>
 

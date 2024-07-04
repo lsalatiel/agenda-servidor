@@ -45,16 +45,22 @@ function DateInput({ value, onChange }) {
     return (
         <FormControl>
             <FormLabel>Data</FormLabel>
-            <Input type="date" value={value} onChange={(e) => onChange(e.target.value)} />
+            <Input
+                type="date"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
         </FormControl>
     );
 }
 
 function TimeInput({ value, onChange }) {
     // Define rounded times between 07:00 and 19:00
-    const hours = [...Array(13).keys()].map(hour => hour + 7);
+    const hours = [...Array(13).keys()].map((hour) => hour + 7);
 
-    const hourOptions = hours.map(hour => `${hour < 10 ? '0' + hour : hour}:00`);
+    const hourOptions = hours.map(
+        (hour) => `${hour < 10 ? "0" + hour : hour}:00`
+    );
 
     const handleTimeChange = (e) => {
         onChange(e.target.value);
@@ -64,7 +70,7 @@ function TimeInput({ value, onChange }) {
         <FormControl>
             <FormLabel>Hora</FormLabel>
             <Select value={value} onChange={handleTimeChange}>
-                {hourOptions.map(option => (
+                {hourOptions.map((option) => (
                     <option key={option} value={option}>
                         {option}
                     </option>
@@ -117,11 +123,20 @@ export default function Schedule() {
     });
 
     formData.start_time = convertToISO8601(timeData.date, timeData.time);
-    formData.end_time = convertToISO8601(timeData.date, incrementHour(timeData.time));
+    formData.end_time = convertToISO8601(
+        timeData.date,
+        incrementHour(timeData.time)
+    );
 
-    if(areaData.name === "Quadra") { formData.area_id = 1; }
-    if(areaData.name === "Campo") { formData.area_id = 2; }
-    if(areaData.name === "Churrasqueira") { formData.area_id = 3; }
+    if (areaData.name === "Quadra") {
+        formData.area_id = 1;
+    }
+    if (areaData.name === "Campo") {
+        formData.area_id = 2;
+    }
+    if (areaData.name === "Churrasqueira") {
+        formData.area_id = 3;
+    }
 
     const handleAreaChange = (field) => (value) => {
         setAreaData({ ...areaData, [field]: value });
@@ -166,11 +181,24 @@ export default function Schedule() {
             <Navbar />
             <Center h="80vh" maxW="1200px" mx="auto">
                 <VStack spacing={4}>
-                    <Heading mb={8} fontSize={"4em"}>Agendar</Heading>
-                    <CategoryInput value={areaData.name} onChange={handleAreaChange("name")} />
-                    <DateInput value={timeData.date} onChange={handleTimeChange("date")} />
-                    <TimeInput value={timeData.time} onChange={handleTimeChange("time")} />
-                    <Button colorScheme="teal" onClick={handleSubmit}>Agendar</Button>
+                    <Heading mb={8} fontSize={"4em"}>
+                        Agendar
+                    </Heading>
+                    <CategoryInput
+                        value={areaData.name}
+                        onChange={handleAreaChange("name")}
+                    />
+                    <DateInput
+                        value={timeData.date}
+                        onChange={handleTimeChange("date")}
+                    />
+                    <TimeInput
+                        value={timeData.time}
+                        onChange={handleTimeChange("time")}
+                    />
+                    <Button colorScheme="teal" onClick={handleSubmit}>
+                        Agendar
+                    </Button>
                 </VStack>
             </Center>
         </>
