@@ -4,7 +4,8 @@ import App from "./App.jsx";
 import Login from "./views/Login.jsx";
 import Register from "./views/Register.jsx";
 import Schedule from "./views/Schedule.jsx";
-import ScheduleList from "./views/ScheduleList.jsx";
+import MySchedules from "./views/MySchedules.jsx";
+import ScheduleList from "./views/ScheduleList.jsx"
 
 // 1. Import the extendTheme function
 import * as ReactDOM from "react-dom/client";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     },
     {
         path: "/meus-agendamentos",
+        element: <MySchedules />,
+    },
+    {
+        path: "/consulta",
         element: <ScheduleList />,
     },
 ]);

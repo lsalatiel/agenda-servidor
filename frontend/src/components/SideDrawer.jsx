@@ -47,7 +47,7 @@ export default function SideDrawer() {
                             <Link to="/meus-agendamentos" fontSize="large">
                                 Meus Agendamentos
                             </Link>
-                            <Link to="consulta" fontSize="large">
+                            <Link to="/consulta" fontSize="large">
                                 Consulta
                             </Link>
                         </VStack>
