@@ -114,21 +114,6 @@ export default function Schedule() {
         name: "",
     });
 
-    const [formData, setFormData] = useState({
-        area_id: 1,
-        user_id: userId,
-        start_time: "",
-        end_time: "",
-        // type: "open",
-    });
-
-    formData.start_time = convertToISO8601(swapDate(timeData.date), timeData.time);
-    formData.end_time = convertToISO8601(swapDate(timeData.date), incrementHour(timeData.time));
-
-    if(areaData.name === "Quadra") { formData.area_id = 1; }
-    else if(areaData.name === "Campo") { formData.area_id = 2; }
-    else if(areaData.name === "Churrasqueira") { formData.area_id = 3; }
-
     const handleAreaChange = (field) => (value) => {
         setAreaData({ ...areaData, [field]: value });
     };
@@ -137,28 +122,50 @@ export default function Schedule() {
         setTimeData({ ...timeData, [field]: value });
     };
 
-    const handleChange = (field) => (value) => {
-        setFormData({ ...formData, [field]: value });
-    };
-
     const handleSubmit = async () => {
         const url = "http://localhost:8000/schedules";
+        const newSchedule = {
+            area_id: areaData.name === "Quadra" ? 1 : areaData.name === "Campo" ? 2 : areaData.name === "Churrasqueira" ? 3 : 1,
+            user_id: userId,
+            start_time: convertToISO8601(swapDate(timeData.date), timeData.time),
+            end_time: convertToISO8601(swapDate(timeData.date), incrementHour(timeData.time))
+        };
+
         try {
-            const response = await fetch(url, {
+            const response = await fetch("http://localhost:8000/schedules", {
+                headers: {
+                    Authorization: `Bearer ${getAccessToken()}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch schedules for validation");
+            }
+            const existingSchedules = await response.json();
+
+            const isDuplicate = existingSchedules.some(schedule =>
+                schedule.area_id === newSchedule.area_id &&
+                schedule.start_time === swapDate(newSchedule.start_time) &&
+                schedule.end_time === swapDate(newSchedule.end_time)
+            );
+
+            if (isDuplicate) {
+                alert("Esse agendamento já existe. Por favor, escolha outro horário.");
+                return;
+            }
+
+            const postResponse = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getAccessToken()}`,
+                    Authorization: `Bearer ${getAccessToken()}`
                 },
-
-                body: JSON.stringify(formData),
+                body: JSON.stringify(newSchedule)
             });
-            if (response.ok) {
-                // Handle successful response
+
+            if (postResponse.ok) {
                 console.log("Data submitted successfully!");
                 successAlert();
             } else {
-                // Handle errors
                 console.error("Error submitting data");
                 failAlert();
             }

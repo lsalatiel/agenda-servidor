@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Box, Text, VStack, Flex } from '@chakra-ui/react';
+import { Box, Text, VStack, Flex, Button } from '@chakra-ui/react';
 
 import NavBar from '../components/Navbar';
 
@@ -39,6 +39,23 @@ export default function MySchedules() {
         fetchSchedules();
     }, []);
 
+    const deleteSchedule = async (scheduleId) => {
+        try {
+            const response = await fetch(`http://localhost:8000/schedules/${scheduleId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${getAccessToken()}`,
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to delete schedule");
+            }
+            setSchedules(schedules.filter((schedule) => schedule.id !== scheduleId));
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     return (
         <>
             <NavBar />
@@ -53,6 +70,12 @@ export default function MySchedules() {
                                         <Text>Data: {formatDateTime(schedule.start_time).formattedDate}</Text>
                                         <Text>Hora: {formatDateTime(schedule.start_time).formattedTime} - {formatDateTime(schedule.end_time).formattedTime}</Text>
                                     </Box>
+                                <Button
+                                    colorScheme="red"
+                                    onClick={() => deleteSchedule(schedule.id)}
+                                >
+                                    Remove
+                                </Button>
                             </Flex>
                         </Box>
                     ))

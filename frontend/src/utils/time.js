@@ -1,15 +1,9 @@
-export function convertToISO8601(dateStr, timeStr) {
-    // Parse date components
-    const [year, day, month] = dateStr.split("-"); // Adjust for yyyy-dd-mm to yyyy-mm-dd
-
-    // Parse time components
-    const [hours, minutes] = timeStr.split(":");
-
-    // Create ISO 8601 formatted datetime string
-    const isoDate = `${year}-${month}-${day}T${hours}:${minutes}:00Z`;
-
-    return isoDate;
-}
+export const convertToISO8601 = (date, time) => {
+    const [year, day, month] = date.split("-");
+    const localDateTime = new Date(`${year}-${month}-${day}T${time}:00`);
+    const isoString = localDateTime.toISOString();
+    return isoString;
+};
 
 export function formatDateTime(isoString) {
     const date = new Date(isoString);
