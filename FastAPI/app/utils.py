@@ -1,9 +1,11 @@
 from passlib.context import CryptContext
 
-from pydantic import GetCoreSchemaHandler, ValidationInfo
+from pydantic import GetCoreSchemaHandler, GetJsonSchemaHandler,ValidationInfo
 import re
 from typing import Any
+
 from pydantic_core import core_schema
+from pydantic.json_schema import JsonSchemaValue
 
 # telling to passlib which is the hashing algorithm
 pwd_content = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -62,5 +64,6 @@ class CPF(str):
         second_digit = calculate_digit(cpf[:9] + str(first_digit))
         return cpf == cpf[:9] + str(first_digit) + str(second_digit)
 
-    def __repr__(self):
-        return f'CPF({super().__repr__()})'
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema: core_schema.CoreSchema, handler: GetJsonSchemaHandler) -> JsonSchemaValue:
+        return {}
