@@ -28,8 +28,6 @@ services:
       - postgres-db:/var/lib/postgresql/data 
 
   frontend:
-    depends_on:
-      - api
     build: ./frontend
     ports:
       - 3000:3000
