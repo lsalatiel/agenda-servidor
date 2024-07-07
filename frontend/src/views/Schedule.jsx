@@ -42,10 +42,23 @@ function CategoryInput({ value, onChange }) {
 }
 
 function DateInput({ value, onChange }) {
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     return (
         <FormControl>
             <FormLabel>Data</FormLabel>
-            <Input type="date" value={value} onChange={(e) => onChange(e.target.value)} />
+            <Input
+                type="date"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                min={getTodayDate()}
+            />
         </FormControl>
     );
 }
@@ -142,8 +155,10 @@ export default function Schedule() {
             }
             const existingSchedules = await response.json();
 
+            console.log("Existing schedules:", existingSchedules);
+
             const isDuplicate = existingSchedules.some(schedule =>
-                schedule.area_id === newSchedule.area_id &&
+                schedule.area.id === newSchedule.area_id &&
                 schedule.start_time === swapDate(newSchedule.start_time) &&
                 schedule.end_time === swapDate(newSchedule.end_time)
             );
