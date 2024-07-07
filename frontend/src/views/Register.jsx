@@ -236,6 +236,7 @@ export default function Register() {
                 navigate("/login");
             } else {
                 console.error("Error during registration");
+                alert("Este email/CPF ja foi utilizado. Por favor, tente novamente.");
             }
         } catch (error) {
             console.error("Error during registration:", error);
