@@ -33,14 +33,9 @@ python -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
 
-3. Install dependencies:
-```
-pip install -r FastAPI/requirements.txt
+3. Set up environment variables:
 
-```
-4. Set up environment variables:
-
-Create a .env file in the FastAPI directory and add the following variables:
+Create a .env file in the root directory and add the following variables:
 ```
 DATABASE_HOSTNAME=localhost
 DATABASE_PORT=5432
@@ -52,23 +47,11 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
-5. Apply database migrations:
-```
-cd FastAPI
-alembic upgrade head
-
-```
-
 ## Running the Application
 
 ### With Docker:
 ```
-docker-compose -f docker-compose-prod.yml up --build
-```
-
-### Without Docker:
-```
-uvicorn app.main:app --reload
+docker-compose up --build
 ```
 
 ## Running Tests
@@ -76,9 +59,6 @@ To run the tests, use the following command:
 ```
 pytest
 ```
-
-## Deployment
-For deployment, ensure that you have set the correct environment variables in your deployment environment. You can use services like Docker, Kubernetes, or any cloud platform to deploy the application.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
