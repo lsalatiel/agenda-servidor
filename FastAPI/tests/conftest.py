@@ -67,6 +67,14 @@ def test_schedule(client, test_area, test_user):
     return response.json()
 
 @pytest.fixture()
+def test_suggestion(client):
+    suggestion_data = {"suggestion": "Test suggestion"}
+    response = client.post("/suggestions/", json=suggestion_data)
+    assert response.status_code == 201
+
+    return response.json()
+
+@pytest.fixture()
 def token(test_user):
     return create_access_token({"user_id": test_user['id']})
 
