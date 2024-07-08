@@ -87,7 +87,7 @@ const CalendarView = () => {
                                 return (
                                     <ListItem key={timeSlot}>
                                         <Text>
-                                            {timeSlot}: {schedule ? `${schedule.area_id === 1 ? "Quadra" : schedule.area_id === 2 ? "Campo" : "Churrasqueira"} - ${formatDateTime(schedule.start_time).formattedTime} a ${formatDateTime(schedule.end_time).formattedTime} - ${schedule.user.name}` : "Disponivel"}
+                                            {timeSlot}: {schedule ? `${schedule.area.id === 1 ? "Quadra" : schedule.area.id === 2 ? "Campo" : "Churrasqueira"} - ${formatDateTime(schedule.start_time).formattedTime} a ${formatDateTime(schedule.end_time).formattedTime} - ${schedule.user.name}` : "Disponivel"}
                                         </Text>
                                     </ListItem>
                                 );
