@@ -3,12 +3,12 @@ import {
     Flex,
     Button,
     HStack,
-    // Link,
     chakra,
     VStack,
     Text,
     useColorMode,
     Box,
+    useColorModeValue,
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -24,7 +24,8 @@ import { getAccessToken } from "../utils/auth";
 import { clearAccessToken } from "../utils/auth";
 import { getUsername } from "../utils/auth";
 
-import logoImage from "../assets/logo.png";
+import logoImageDark from "../assets/logo-dark.png";
+import logoImageLight from "../assets/logo-light.png";
 
 function LoginStack() {
     const [name, setName] = useState(null);
@@ -82,8 +83,8 @@ function LoginStack() {
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
-    // const bg = { light: "gray.100", dark: "gray.900" }
-    // const color = { light: "black", dark: "white" }
+    
+    const logoImage = useColorModeValue(logoImageLight, logoImageDark);
 
     return (
         <chakra.header id="header">
