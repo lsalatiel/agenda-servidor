@@ -1,11 +1,13 @@
-import { Box, Heading, Text, HStack, VStack, Image } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 
 import React from "react";
 
 export default function NotesBox() {
+    const bgColor = useColorModeValue("gray.200", "gray.900");
+
     return (
         <>
-            <Box p="20px" bg="gray" borderRadius={10} mb={10}>
+            <Box p="20px" bg={bgColor} borderRadius={10} mb={10}>
                 <Heading fontSize="30px">Avisos</Heading>
                 <Text p="10px">
                     1. O agendamento da area dos servidores para esse semestre
