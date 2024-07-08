@@ -12,11 +12,27 @@ export default function SuggestionBox() {
     };
 
     const [message, setMessage] = useState("");
-
-    const submitSuggestion = () => {
-        console.log(value);
-        setValue("");
-        setMessage("Sugestão enviada com sucesso!");
+    
+    const submitSuggestion = async() => {
+        const url = "http://localhost:8000/suggestions";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ suggestion: value }),
+            });
+            if (response.ok) {
+                setValue("");
+                alert("Sugestão enviada com sucesso!");
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setMessage("Erro ao enviar sugestão");
+            return;
+        }
     };
 
     return (
