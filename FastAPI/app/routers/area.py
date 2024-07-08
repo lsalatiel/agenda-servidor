@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.database import get_db
 from sqlalchemy.orm import Session
@@ -31,3 +32,8 @@ async def delete_area(id: str, db: Session = Depends(get_db)):
     db.delete(area)
     db.commit()
     return None
+
+@router.get("/", response_model=List[schemas.AreaResponse])
+async def get_areas(db: Session = Depends(get_db)):
+    areas = db.query(models.Area).all()
+    return areas
