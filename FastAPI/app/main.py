@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import user, schedule, area, auth
+from app.routers import user, schedule, area, auth, suggestion
 from fastapi.middleware.cors import CORSMiddleware
 
 from contextlib import asynccontextmanager
@@ -36,6 +36,7 @@ app.include_router(user.router)
 app.include_router(schedule.router)
 app.include_router(area.router)
 app.include_router(auth.router)
+app.include_router(suggestion.router)
 
 def initialize_areas(db: Session):
     areas = [

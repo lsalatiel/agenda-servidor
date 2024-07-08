@@ -31,3 +31,9 @@ class Schedule(Base):
 
     area = relationship("Area")
     user = relationship("User")
+
+class Suggestion(Base):
+    __tablename__ = "suggestions"
+    id = Column(Integer, primary_key=True, nullable=False)
+    suggestion = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
