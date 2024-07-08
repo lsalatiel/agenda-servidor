@@ -23,3 +23,7 @@ def test_get_suggestion_not_found(client):
 def test_get_suggestions(client, test_suggestion):
     response = client.get("/suggestions/")
     assert response.status_code == 200
+
+def test_delete_suggestion(client, test_suggestion):
+    response = client.delete(f"/suggestions/{test_suggestion['id']}")
+    assert response.status_code == 204
