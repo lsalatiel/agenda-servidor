@@ -25,3 +25,12 @@ async def get_suggestion(id: int, db: Session = Depends(get_db)):
 async def get_suggestions(db: Session = Depends(get_db)):
     suggestions = db.query(models.Suggestion).all()
     return suggestions
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_suggestion(id: int, db: Session = Depends(get_db)):
+    suggestion = db.query(models.Suggestion).filter(models.Suggestion.id == id).first()
+    if not suggestion:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Suggestion not found")
+    db.delete(suggestion)
+    db.commit()
+    return None
