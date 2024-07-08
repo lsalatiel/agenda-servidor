@@ -27,6 +27,9 @@ class ScheduleCreate(BaseModel):
     start_time: datetime
     end_time: datetime
 
+class SuggestionCreate(BaseModel):
+    suggestion: str
+
 class UserResponse(BaseModel):
     id: CPF
     name: str
@@ -47,6 +50,13 @@ class ScheduleResponse(BaseModel):
     user: UserResponse
     start_time: datetime
     end_time: datetime
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+class SuggestionResponse(BaseModel):
+    id: int
+    suggestion: str
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
