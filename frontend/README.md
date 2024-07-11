@@ -18,8 +18,6 @@ cd frontend/
 2. Install dependencies
 ```
 npm install
-npm install react-router-dom
-npm install react-icons --save
 ```
 
 3. Run the application
